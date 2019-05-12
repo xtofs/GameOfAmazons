@@ -14,7 +14,6 @@ namespace GameOfAmazons.Engine
         public static implicit operator Position((int x, int y) pos) =>
             new Position(pos.x, pos.y);
 
-
         public override string ToString() => $"({X},{Y})";
 
         public override bool Equals(object obj) => obj is Position pos && Equals(pos);
@@ -29,6 +28,15 @@ namespace GameOfAmazons.Engine
         public Position Move(Direction direction, int distance)
         {
             return new Position(X + direction.DX * distance, Y + direction.DY * distance);
+        }
+    }
+
+    public static class PositionExtensions
+    {
+        public static bool IsValid<T>(this T[,] board , Position pos)
+        {
+            return 0 <= pos.X & pos.X <= board.GetUpperBound(0) &&
+                   0 <= pos.Y & pos.Y <= board.GetUpperBound(1);
         }
     }
 }

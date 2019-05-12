@@ -13,9 +13,7 @@ namespace GameOfAmazons.Engine.Console
             var runner = new GameRunnerWithStats(new RandomStrategy(), new BlockerStrategy());
 
 
-            var game = new Game(6, 6,
-              (White, (2, 0)), (White, (3, 5)),
-              (Black, (0, 2)), (Black, (5, 3)));
+            var game = Game.Create(GameOpening.StandardSixBySix);
 
 
             for (int i = 0; i < 1000; i++)
