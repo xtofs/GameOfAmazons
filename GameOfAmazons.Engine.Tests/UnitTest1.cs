@@ -41,7 +41,7 @@ namespace GameOfAmazons.Engine.Tests
                 (White, (2, 0)), (White, (3, 5)),
                 (Black, (0, 4)), (Black, (5, 3)));
 
-            game = game.Move(new Move(true, new Position(2, 0), new Position(2, 3), new Position(3, 3)));
+            game = game.ApplyMove(new Move(true, new Position(2, 0), new Position(2, 3), new Position(3, 3)));
 
 
             var moves = game.LegalMoves().ToArray();

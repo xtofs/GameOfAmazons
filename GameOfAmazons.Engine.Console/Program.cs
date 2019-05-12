@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
+using System.Threading;
 
 namespace GameOfAmazons.Engine.Console
 {
@@ -12,61 +10,29 @@ namespace GameOfAmazons.Engine.Console
         static void Main(string[] args)
         {
 
-            var runner = new GameRunner(new RandomStrategy(), new RandomStrategy());
+            var runner = new GameRunnerWithStats(new RandomStrategy(), new BlockerStrategy());
 
 
             var game = new Game(6, 6,
               (White, (2, 0)), (White, (3, 5)),
               (Black, (0, 2)), (Black, (5, 3)));
 
-            var colorCounter = new Counter<bool>();
-            var countCounter = new Counter<int>();
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1000; i++)
             {
-                var sw = Stopwatch.StartNew();
                 var final = runner.Run(game);
-                sw.Stop();
 
-                colorCounter[final.IsWhitesMove] += 1;
-                countCounter[final.Moves] += 1;
 
-                if (final.Moves <= 10 || final.Moves >= 33) {
+                if (final.Moves <= 6 || final.Moves >= 31)
+                {
+                    System.Console.WriteLine("{0} wins after {1} moves.",
+                        final.IsWhitesTurn ? "Black" : "White", final.Moves);
                     System.Console.WriteLine(final);
-                    System.Console.WriteLine(final.IsWhitesMove);
-                    System.Console.WriteLine(final.Moves);
                     System.Console.WriteLine();
                 }
-                // System.Console.WriteLine("{0} wins after {1} moves in {2}", w ? "White" : "Black", c, sw.Elapsed);
             }
 
-            System.Console.WriteLine(colorCounter);
-            System.Console.WriteLine(countCounter);
+            System.Console.WriteLine(runner.ShowStats());
         }
-
-        class RandomStrategy : IStrategy
-        {
-            private readonly Random rand = new Random();
-
-            public Move Move(Game game, IReadOnlyList<Move> moves)
-            {
-                return rand.ChooseOne(moves);
-
-            }
-        }
-    }
-
-    class Counter<TKey>
-    {
-        private readonly IDictionary<TKey, int> d = new Dictionary<TKey, int>();
-        public int this[TKey key]
-        {
-            get => d.TryGetValue(key, out var v) ? v : 0;
-            set => d[key] = value;
-        }
-
-
-
-        public override string ToString() => string.Join(" ", d.Keys.OrderBy(i => i).Select(k => $"{k}={d[k]}"));
     }
 }

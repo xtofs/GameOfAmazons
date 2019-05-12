@@ -52,12 +52,12 @@ namespace GameOfAmazons.Engine
             return new Game(w, h, initial);
         }
 
-        public bool IsWhitesMove => isWhitesMove;
+        public bool IsWhitesTurn => isWhitesMove;
 
         public int Moves => moves;
 
 
-        public Game Move(Move move)
+        public Game ApplyMove(Move move)
         {
             if (!IsLegal(move, out var reason))
             {
@@ -111,19 +111,19 @@ namespace GameOfAmazons.Engine
                 {
                     foreach (var shootTarget in LegalTargets(moreTarget, origin)) // all targets including original position
                     {
-                        yield return new Move(IsWhitesMove, origin, moreTarget, shootTarget); ;
+                        yield return new Move(IsWhitesTurn, origin, moreTarget, shootTarget); ;
                     }
                 }
             }
         }
 
-        private IEnumerable<(int x, int y)> GetAmazons(bool white)
+        public IEnumerable<(int x, int y)> GetAmazons(bool white)
         {
             var color = (white ? Square.White : Square.Black);
             return board.Where((v, x, y) => v == color).Select((triple => (triple.x, triple.y)));
         }
 
-        private IEnumerable<Position> LegalTargets(Position from, Position? include)
+        public IEnumerable<Position> LegalTargets(Position from, Position? include = null)
         {
             var n = Math.Max(w, h);
             foreach (var direction in Direction.All)
