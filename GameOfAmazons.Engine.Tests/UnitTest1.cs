@@ -38,10 +38,10 @@ namespace GameOfAmazons.Engine.Tests
         public void Test1()
         {
             var game = new Game(6, 6,
-                (White, 2, 0), (White, 3, 5),
-                (Black, 0, 4), (Black, 5, 3));
+                (White, (2, 0)), (White, (3, 5)),
+                (Black, (0, 4)), (Black, (5, 3)));
 
-            game = game.Move(new Move(White, new Position(2, 0), new Position(2, 3), new Position(3, 3)));
+            game = game.Move(new Move(true, new Position(2, 0), new Position(2, 3), new Position(3, 3)));
 
 
             var moves = game.LegalMoves().ToArray();
@@ -59,10 +59,10 @@ X#.O#.
 ####.#");
             var moves = game.LegalMoves().ToList();
             Assert.Equal(3, moves.Count);
-            Assert.True(moves.Contains(new Move(White, (0, 1), (1, 2), (0, 1))));
+            Assert.True(moves.Contains(new Move(true, (0, 1), (1, 2), (0, 1))));
 
-            Assert.True(moves.Contains(new Move(White, (3, 4), (2, 4), (3, 4))));
-            Assert.True(moves.Contains(new Move(White, (3, 4), (4, 5), (3, 4))));
+            Assert.True(moves.Contains(new Move(true, (3, 4), (2, 4), (3, 4))));
+            Assert.True(moves.Contains(new Move(true, (3, 4), (4, 5), (3, 4))));
 
 
         }

@@ -13,15 +13,18 @@ namespace GameOfAmazons.Engine.Console
            
 
             var game = new Game(6, 6,
-              (White, 2, 0), (White, 3, 5),
-              (Black, 0, 2), (Black, 5, 3));
+              (White, (2, 0)), (White, (3, 5)),
+              (Black, (0, 2)), (Black, (5, 3)));
 
             var rand = new Random();
             for (int i = 0; true; i++)
             {
                 var moves = game.LegalMoves().ToArray();
                 if(! moves.Any())
+                {
+                    System.Console.WriteLine("{0} can't move", game.IsWhitesMove ? "White" : "Black");
                     break;
+                }
 
                 System.Console.WriteLine("{0} moves", game.IsWhitesMove ? "White" : "Black");
                 var move = rand.ChooseOne(moves);
