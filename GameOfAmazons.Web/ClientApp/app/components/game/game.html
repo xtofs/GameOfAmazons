@@ -1,0 +1,28 @@
+<template>
+    <require from="./game.css"></require>
+
+
+    <p if.bind="!isLoaded"><em>Loading...</em></p>
+
+    <h3 if.bind="isLoaded">${isBlacksTurn ? "Black" : "White" }  ${isShootMode ? "shoots" : "moves" } </h3>
+
+    </table>
+    <table if.bind="isLoaded" class="board">
+        <tbody>
+            <tr repeat.for="row of board.cells">
+                <td repeat.for="cell of row" class="bg${($index + $parent.$index) % 2} x">                    
+                    <div
+                        class="cell ${cell.isSelected?'selected':''} ${cell.isHighlighted?'highlight':''} ${isShootMode?'shoot':'move'}"
+                        click.delegate="clicked($index, $parent.$index)">
+                        <div class="piece piece-${cell.piece}">
+                            &nbsp;
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p if.bind="originalAmazonPosition && isShootMode">Amazon's original position: ${originalAmazonPosition.x} ${originalAmazonPosition.y}</p>
+
+
+</template>
