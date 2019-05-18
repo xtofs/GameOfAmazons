@@ -21,10 +21,17 @@ namespace GameOfAmazons.Engine
             this.initialTokenPositions = initialTokenPositions ?? throw new ArgumentNullException(nameof(initialTokenPositions));
         }
 
-
         public static GameOpening StandardSixBySix = new GameOpening(6, 6,
               (White, (2, 0)), (White, (3, 5)),
               (Black, (0, 2)), (Black, (5, 3)));
+
+        // 0 0 1 0
+        // 2 0 0 0
+        // 0 0 0 2
+        // 0 1 0 0
+        public static GameOpening StandardFourByFour = new GameOpening(4, 4,
+              (White, (2, 0)), (White, (1, 3)),
+              (Black, (0, 1)), (Black, (3, 2)));
     }
 
     public class Game

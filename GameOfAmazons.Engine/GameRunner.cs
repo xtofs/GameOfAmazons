@@ -19,11 +19,10 @@ namespace GameOfAmazons.Engine
 
         public GameRunnerWithStats(IStrategy white, IStrategy black, bool trace = false) : base(white, black, trace)
         {
-
             whiteWinCounter = new Counter<bool>();
             timer = new Timer<int>();
-
         }
+
         public override Game Run(Game game)
         {
             var sw = Stopwatch.StartNew();
